@@ -1,0 +1,1001 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ripple | May–June 2026 | Alkimi Exchange</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Unbounded:wght@200;300;400;500;600;700;800;900&family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;1,400&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+  /* ── ALKIMI DESIGN TOKENS ── */
+  :root {
+    --alkimi-black:      #0A0A0F;
+    --alkimi-grey-dark:  #2A2A35;
+    --alkimi-grey-mid:   #7A7A85;
+    --alkimi-grey-light: #C8C8D0;
+    --alkimi-white:      #FFFFFF;
+    --alkimi-purple:     #5C26FF;
+    --alkimi-purple-dark:#4A1ECC;
+    --alkimi-purple-light:#8A5CFF;
+    --alkimi-green:      #00E87B;
+    --alkimi-green-dark: #00B862;
+    --alkimi-error:      #FF4D6A;
+    --alkimi-warning:    #FFB84D;
+
+    --surface-0: #0A0A0F;
+    --surface-1: #121218;
+    --surface-2: #1A1A22;
+    --surface-3: #2A2A35;
+
+    --border:        rgba(255,255,255,0.08);
+    --border-hover:  rgba(255,255,255,0.15);
+    --border-active: var(--alkimi-purple);
+
+    --font-title:   'Unbounded', system-ui, sans-serif;
+    --font-body:    'Poppins', system-ui, sans-serif;
+
+    --purple-glow-subtle: rgba(92,38,255,0.08);
+    --purple-glow-medium: rgba(92,38,255,0.15);
+    --green-glow-subtle:  rgba(0,232,123,0.08);
+    --green-glow-medium:  rgba(0,232,123,0.15);
+
+    --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px;
+    --space-6:24px; --space-8:32px; --space-10:40px; --space-12:48px;
+    --radius-sm:6px; --radius-md:10px; --radius-lg:14px; --radius-full:999px;
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    background: var(--alkimi-black);
+    color: var(--alkimi-white);
+    font-family: var(--font-body);
+    font-size: 14px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+  }
+
+  /* ── OVERLINE ── */
+  .overline {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--alkimi-purple);
+    display: block;
+    margin-bottom: var(--space-4);
+    margin-top: var(--space-10);
+  }
+  .overline:first-child { margin-top: 0; }
+
+  /* ── NAVBAR ── */
+  .navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px var(--space-8);
+    background: rgba(10,10,15,0.85);
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .navbar-left { display: flex; align-items: center; gap: var(--space-6); }
+  .alkimi-logo svg { height: 22px; width: auto; display: block; }
+  .navbar-divider { width: 1px; height: 28px; background: var(--border); }
+  .navbar-campaign { display: flex; flex-direction: column; gap: 2px; }
+  .navbar-title {
+    font-family: var(--font-title);
+    font-size: 16px;
+    font-weight: 500;
+    letter-spacing: 0.02em;
+    text-transform: uppercase;
+    color: var(--alkimi-white);
+    line-height: 1.2;
+  }
+  .navbar-sub {
+    font-size: 13px;
+    color: var(--alkimi-grey-mid);
+    font-weight: 400;
+  }
+  .navbar-tag {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 4px 12px;
+    border-radius: var(--radius-full);
+    background: var(--green-glow-medium);
+    color: var(--alkimi-green);
+    border: 1px solid rgba(0,232,123,0.25);
+  }
+
+  /* ── TABS ── */
+  .tabs {
+    background: var(--surface-1);
+    border-bottom: 1px solid var(--border);
+    padding: 0 var(--space-8);
+    display: flex;
+    gap: 0;
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 14px 20px;
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--alkimi-grey-mid);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    white-space: nowrap;
+    transition: color 0.2s, border-color 0.2s;
+    user-select: none;
+  }
+  .tab:hover { color: var(--alkimi-grey-light); }
+  .tab.active {
+    color: var(--alkimi-white);
+    border-bottom-color: var(--alkimi-purple);
+    font-weight: 600;
+  }
+
+  /* ── CONTENT ── */
+  .content {
+    padding: var(--space-8) var(--space-8);
+    max-width: 1320px;
+    margin: 0 auto;
+  }
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* ── HERO INTRO ── */
+  .hero-strip {
+    background: var(--surface-1);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-8);
+    margin-bottom: var(--space-8);
+    position: relative;
+    overflow: hidden;
+  }
+  .hero-strip::before {
+    content: '';
+    position: absolute;
+    top: -60%;
+    right: -10%;
+    width: 500px;
+    height: 500px;
+    background: radial-gradient(ellipse, rgba(92,38,255,0.1) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .hero-strip-inner { position: relative; }
+  .hero-strip-eyebrow {
+    font-family: var(--font-body);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--alkimi-purple-light);
+    margin-bottom: var(--space-2);
+  }
+  .hero-strip-title {
+    font-family: var(--font-title);
+    font-size: 22px;
+    font-weight: 500;
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    color: var(--alkimi-white);
+    line-height: 1.15;
+    margin-bottom: var(--space-2);
+  }
+  .hero-strip-sub {
+    font-size: 13px;
+    color: var(--alkimi-grey-light);
+    font-weight: 300;
+  }
+
+  /* ── KPI GRID ── */
+  .kpi-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: var(--space-4); margin-bottom: var(--space-4); }
+  .kpi-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: border-color 0.2s, background 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .kpi-card:hover {
+    border-color: rgba(92,38,255,0.3);
+    background: rgba(255,255,255,0.06);
+  }
+  .kpi-card.accent-purple::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--alkimi-purple), var(--alkimi-purple-light));
+  }
+  .kpi-card.accent-green::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--alkimi-green-dark), var(--alkimi-green));
+  }
+  .kpi-card.accent-grey::after {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--alkimi-grey-mid), var(--alkimi-grey-light));
+  }
+  .kpi-label {
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--alkimi-grey-mid);
+    margin-bottom: var(--space-2);
+  }
+  .kpi-value {
+    font-family: var(--font-title);
+    font-size: 26px;
+    font-weight: 600;
+    color: var(--alkimi-white);
+    letter-spacing: -0.02em;
+    text-transform: uppercase;
+    line-height: 1.1;
+    margin-bottom: var(--space-2);
+  }
+  .kpi-sub {
+    font-size: 11.5px;
+    color: var(--alkimi-grey-mid);
+    font-weight: 400;
+  }
+  .kpi-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 11px;
+    font-weight: 600;
+    margin-top: 6px;
+    padding: 2px 8px;
+    border-radius: var(--radius-full);
+  }
+  .kpi-tag.green { background: var(--green-glow-subtle); color: var(--alkimi-green); }
+  .kpi-tag.red   { background: rgba(255,77,106,0.1); color: var(--alkimi-error); }
+  .kpi-tag.muted { background: rgba(255,255,255,0.06); color: var(--alkimi-grey-light); }
+
+  /* ── CHART CARDS ── */
+  .chart-grid { display: grid; gap: var(--space-4); }
+  .chart-grid.col2 { grid-template-columns: 1fr 1fr; }
+  .chart-grid.col3 { grid-template-columns: 2fr 1fr; }
+  .chart-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+    transition: border-color 0.2s;
+  }
+  .chart-card:hover { border-color: var(--border-hover); }
+  .chart-title {
+    font-family: var(--font-body);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--alkimi-white);
+    margin-bottom: 2px;
+    letter-spacing: -0.01em;
+  }
+  .chart-subtitle {
+    font-size: 11.5px;
+    color: var(--alkimi-grey-mid);
+    font-weight: 400;
+    margin-bottom: var(--space-4);
+  }
+  .chart-wrap { position: relative; }
+
+  /* ── TABLE ── */
+  .table-wrap { overflow-x: auto; }
+  table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+  th {
+    background: rgba(255,255,255,0.03);
+    color: var(--alkimi-grey-mid);
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    padding: 10px 14px;
+    text-align: left;
+    border-bottom: 1px solid var(--border);
+    white-space: nowrap;
+  }
+  td {
+    padding: 10px 14px;
+    border-bottom: 1px solid rgba(255,255,255,0.04);
+    color: var(--alkimi-grey-light);
+    vertical-align: middle;
+  }
+  tr:last-child td { border-bottom: none; }
+  tr:hover td { background: rgba(255,255,255,0.02); }
+  .num { text-align: right; font-variant-numeric: tabular-nums; }
+  .td-bold { color: var(--alkimi-white); font-weight: 600; }
+  .row-subtotal td { background: var(--purple-glow-subtle); color: var(--alkimi-grey-light); }
+  .row-subtotal .td-bold { color: var(--alkimi-white); }
+  .row-total td {
+    background: rgba(255,255,255,0.04);
+    border-top: 1px solid rgba(92,38,255,0.2);
+    color: var(--alkimi-white);
+    font-weight: 600;
+  }
+  .ctr-high { color: var(--alkimi-green) !important; font-weight: 600; }
+  .ctr-mid  { color: var(--alkimi-purple-light) !important; }
+
+  /* ── TAGS / BADGES ── */
+  .tag {
+    font-family: var(--font-body);
+    font-size: 10.5px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    padding: 3px 10px;
+    border-radius: var(--radius-full);
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .tag--purple { background: var(--purple-glow-medium); color: var(--alkimi-purple-light); }
+  .tag--green  { background: var(--green-glow-medium);  color: var(--alkimi-green); }
+  .tag--grey   { background: rgba(255,255,255,0.08);     color: var(--alkimi-grey-light); }
+  .tag--red    { background: rgba(255,77,106,0.12);      color: #FF6B83; }
+
+  /* ── PERIOD CARDS ── */
+  .period-grid { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); margin-bottom: var(--space-4); }
+  .period-card {
+    background: rgba(255,255,255,0.03);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-lg);
+    padding: var(--space-6);
+  }
+  .period-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--space-6);
+  }
+  .period-label-group { display: flex; align-items: center; gap: var(--space-3); }
+  .period-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+  .period-name {
+    font-family: var(--font-title);
+    font-size: 13px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.02em;
+  }
+  .period-range { font-size: 11px; color: var(--alkimi-grey-mid); }
+  .period-stats { display: grid; grid-template-columns: 1fr 1fr; gap: var(--space-4); }
+  .ps-label { font-size: 10.5px; color: var(--alkimi-grey-mid); text-transform: uppercase; letter-spacing: 0.06em; font-weight: 600; margin-bottom: 2px; }
+  .ps-value { font-family: var(--font-title); font-size: 20px; font-weight: 600; text-transform: uppercase; letter-spacing: -0.02em; }
+  .prog-bar { height: 3px; background: rgba(255,255,255,0.06); border-radius: 2px; overflow: hidden; margin-top: var(--space-6); }
+  .prog-fill { height: 100%; border-radius: 2px; }
+  .prog-label { font-size: 10.5px; color: var(--alkimi-grey-mid); margin-top: var(--space-2); }
+
+  /* ── INSIGHT BOX ── */
+  .insight {
+    background: var(--purple-glow-subtle);
+    border: 1px solid rgba(92,38,255,0.2);
+    border-radius: var(--radius-md);
+    padding: var(--space-4) var(--space-6);
+    margin-bottom: var(--space-6);
+    font-size: 13px;
+    color: var(--alkimi-grey-light);
+    line-height: 1.6;
+  }
+  .insight strong { color: var(--alkimi-white); font-weight: 600; }
+  .insight .insight-icon { color: var(--alkimi-purple-light); margin-right: 6px; }
+
+  /* ── DIVIDER ── */
+  hr.divider {
+    border: none;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(92,38,255,0.2), transparent);
+    margin: var(--space-8) 0;
+  }
+
+  /* ── RETARGETING GRID ── */
+  .kpi-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: var(--space-4); margin-bottom: var(--space-4); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 960px) {
+    .kpi-grid, .kpi-grid-3 { grid-template-columns: repeat(2,1fr); }
+    .chart-grid.col2, .chart-grid.col3 { grid-template-columns: 1fr; }
+    .period-grid { grid-template-columns: 1fr; }
+    .content { padding: var(--space-4); }
+    .tabs, .navbar { padding-left: var(--space-4); padding-right: var(--space-4); }
+    .hero-strip-title { font-size: 16px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <div class="navbar-left">
+    <!-- Ripple logo -->
+    <div style="display:inline-flex;align-items:center;gap:10px;">
+      <svg width="26" height="24" viewBox="-6 -6 72 66" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="rippleLogoG" x1="30" y1="-6" x2="30" y2="60" gradientUnits="userSpaceOnUse">
+            <stop offset="0%" stop-color="#00C8EC"/>
+            <stop offset="55%" stop-color="#0088D4"/>
+            <stop offset="100%" stop-color="#0055BB"/>
+          </linearGradient>
+        </defs>
+        <!-- Top lobe -->
+        <circle cx="30" cy="12" r="14" fill="url(#rippleLogoG)"/>
+        <!-- Bottom-left lobe -->
+        <circle cx="13" cy="42" r="14" fill="url(#rippleLogoG)"/>
+        <!-- Bottom-right lobe -->
+        <circle cx="47" cy="42" r="14" fill="url(#rippleLogoG)"/>
+      </svg>
+      <span style="font-family:'Poppins',system-ui,sans-serif;font-size:15px;font-weight:500;color:var(--alkimi-white);letter-spacing:-0.01em;line-height:1">ripple</span>
+    </div>
+    <!-- × separator -->
+    <div style="color:var(--alkimi-grey-mid);font-size:18px;font-weight:300;line-height:1;padding:0 4px">×</div>
+    <!-- Alkimi logo -->
+    <div class="alkimi-logo">
+      <svg viewBox="68 46 216 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M83.8615 58.6759C78.5907 58.5085 73.4034 59.9878 69.0608 62.8966L72.2676 68.7C75.3341 66.4522 79.084 65.2623 82.9241 65.3187C88.7704 65.3187 91.6565 68.0525 91.6565 72.7289V73.2325H82.5787C71.9222 73.2325 68 77.693 68 83.4005C68 89.1081 73.057 93.6166 81.074 93.6166C86.3283 93.6166 90.1518 91.9618 92.1005 89.0121V93.1609H99.8462V73.0646C99.8462 63.2323 93.9999 58.6759 83.8861 58.6759H83.8615ZM91.6319 82.5132C90.9055 84.187 89.6588 85.5979 88.0663 86.5483C86.4738 87.4987 84.6154 87.9409 82.7514 87.8131C78.5332 87.8131 76.0417 85.9665 76.0417 83.0168C76.0417 80.6187 77.5465 78.4844 83.1461 78.4844H91.6319V82.4413V82.5132Z" fill="#FFFFFF"/>
+        <path d="M113.711 46H105.497V93.4109H113.711V46Z" fill="#FFFFFF"/>
+        <path d="M145.855 93.7292H155.845L139.811 73.9447L154.464 59.6278H144.597L127.576 74.9519V46H119.361V93.7292H127.576V84.7362L133.693 79.1006L145.855 93.7292Z" fill="#FFFFFF"/>
+        <path d="M167.592 59.3477H159.378V93.473H167.592V59.3477Z" fill="#FFFFFF"/>
+        <path d="M218.253 59.034C215.761 58.9459 213.281 59.412 211.002 60.397C208.724 61.382 206.707 62.8597 205.105 64.7176C203.822 62.8392 202.051 61.324 199.972 60.3258C197.892 59.3277 195.578 58.8819 193.264 59.034C191.102 58.9506 188.947 59.3381 186.958 60.1679C184.97 60.9977 183.197 62.2489 181.769 63.8302V59.4896H173.949V93.591H182.164V76.2765C182.164 69.5138 185.839 66.0605 191.291 66.0605C196.224 66.0605 199.184 69.0102 199.184 75.0774V93.591H207.399V76.2765C207.399 69.5138 211.148 66.0605 216.526 66.0605C221.46 66.0605 224.42 69.0102 224.42 75.0774V93.591H232.634V74.0463C232.634 63.7583 226.714 59.1059 218.253 59.1059" fill="#FFFFFF"/>
+        <path d="M246.093 85.2653V67.2933C246.093 62.7562 242.415 59.0781 237.877 59.0781V93.4804C242.415 93.4804 246.093 89.8024 246.093 85.2653Z" fill="#FFFFFF"/>
+        <path d="M262.163 59.0781C260.952 59.0781 261.062 60.3218 261.503 60.7674C261.985 61.1977 263.589 62.8645 263.589 62.8645L263.589 67.5642C263.589 67.5642 254.221 84.7493 253.026 86.9955C251.49 89.8835 253.906 93.4804 256.657 93.4804C258.562 93.4804 275.266 93.4804 278.111 93.4804C281.412 93.4804 283.833 90.0974 282.292 86.9955C281.75 85.9032 271.51 67.5642 271.51 67.5642V62.867L273.621 60.7674C274.267 60.1379 273.968 59.0781 273.044 59.0781C272.12 59.0781 263.549 59.0781 262.163 59.0781Z" fill="#FFFFFF"/>
+      </svg>
+    </div>
+    <div class="navbar-divider"></div>
+    <div class="navbar-campaign">
+      <span class="navbar-title">Ripple Display Campaign</span>
+      <span class="navbar-sub">May – June 2026</span>
+    </div>
+  </div>
+  <span class="navbar-tag">Live Campaign</span>
+</nav>
+
+<!-- TABS -->
+<div class="tabs">
+  <div class="tab active" onclick="switchTab('overall',this)">Overall Performance</div>
+  <div class="tab" onclick="switchTab('creative',this)">Creative Performance</div>
+  <div class="tab" onclick="switchTab('domain',this)">Domain Performance</div>
+  <div class="tab" onclick="switchTab('retargeting',this)">Retargeting Performance</div>
+</div>
+
+<!-- CONTENT -->
+<div class="content">
+
+<!-- ═══════════════════ OVERALL PERFORMANCE ═══════════════════ -->
+<div id="overall" class="panel active">
+
+  <div class="hero-strip">
+    <div class="hero-strip-inner">
+      <div class="hero-strip-eyebrow">Campaign Overview · Alkimi Exchange</div>
+      <div class="hero-strip-title">Ripple Display — May &amp; June 2026</div>
+      <div class="hero-strip-sub">25 May 2026 to 30 June 2026 · Turkey &amp; Africa markets · Display formats</div>
+    </div>
+  </div>
+
+  <span class="overline">Campaign Summary</span>
+  <div class="kpi-grid">
+    <div class="kpi-card accent-purple">
+      <div class="kpi-label">Total Impressions</div>
+      <div class="kpi-value">1.50M</div>
+      <div class="kpi-sub">1,504,196 served</div>
+      <div class="kpi-tag muted">Active campaign</div>
+    </div>
+    <div class="kpi-card accent-purple">
+      <div class="kpi-label">Total Clicks</div>
+      <div class="kpi-value">11,124</div>
+      <div class="kpi-sub">All placements combined</div>
+    </div>
+    <div class="kpi-card accent-green">
+      <div class="kpi-label">Overall CTR</div>
+      <div class="kpi-value">0.74%</div>
+      <div class="kpi-sub">Blended click-through rate</div>
+    </div>
+    <div class="kpi-card accent-grey">
+      <div class="kpi-label">Total Spend</div>
+      <div class="kpi-value">£663.85</div>
+      <div class="kpi-sub">GBP total investment</div>
+    </div>
+  </div>
+
+  <span class="overline">Period Breakdown</span>
+  <div class="period-grid">
+    <div class="period-card">
+      <div class="period-header">
+        <div class="period-label-group">
+          <div class="period-dot" style="background:var(--alkimi-purple)"></div>
+          <div class="period-name" style="color:var(--alkimi-purple-light)">May 2026</div>
+        </div>
+        <span class="period-range">26 May – 31 May</span>
+      </div>
+      <div class="period-stats">
+        <div><div class="ps-label">Impressions</div><div class="ps-value" style="color:var(--alkimi-purple-light)">904,143</div></div>
+        <div><div class="ps-label">Clicks</div><div class="ps-value" style="color:var(--alkimi-purple-light)">8,393</div></div>
+        <div><div class="ps-label">CTR</div><div class="ps-value" style="color:var(--alkimi-purple-light)">0.93%</div></div>
+        <div><div class="ps-label">Spend</div><div class="ps-value" style="color:var(--alkimi-purple-light)">£522</div></div>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:60.1%;background:linear-gradient(90deg,var(--alkimi-purple),var(--alkimi-purple-light))"></div></div>
+      <div class="prog-label">60.1% of total impressions</div>
+    </div>
+    <div class="period-card">
+      <div class="period-header">
+        <div class="period-label-group">
+          <div class="period-dot" style="background:var(--alkimi-green)"></div>
+          <div class="period-name" style="color:var(--alkimi-green)">June 2026</div>
+        </div>
+        <span class="period-range">1 Jun – 7 Jun (to date)</span>
+      </div>
+      <div class="period-stats">
+        <div><div class="ps-label">Impressions</div><div class="ps-value" style="color:var(--alkimi-green)">600,053</div></div>
+        <div><div class="ps-label">Clicks</div><div class="ps-value" style="color:var(--alkimi-green)">2,731</div></div>
+        <div><div class="ps-label">CTR</div><div class="ps-value" style="color:var(--alkimi-green)">0.46%</div></div>
+        <div><div class="ps-label">Spend</div><div class="ps-value" style="color:var(--alkimi-green)">£142</div></div>
+      </div>
+      <div class="prog-bar"><div class="prog-fill" style="width:39.9%;background:linear-gradient(90deg,var(--alkimi-green-dark),var(--alkimi-green))"></div></div>
+      <div class="prog-label">39.9% of total impressions · campaign ongoing</div>
+    </div>
+  </div>
+
+  <span class="overline">Performance Trends</span>
+  <div class="chart-card">
+    <div class="chart-title">Daily Performance</div>
+    <div class="chart-subtitle">Impressions &amp; clicks by day — 26 May to 7 Jun</div>
+    <div class="chart-wrap" style="height:260px"><canvas id="dailyChart"></canvas></div>
+  </div>
+
+  <span class="overline">Regional Breakdown</span>
+  <div class="chart-card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Country</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th></tr></thead>
+        <tbody>
+          <tr><td><span class="tag tag--red">🇹🇷 Turkey</span></td><td class="num td-bold">768,977</td><td class="num">6,756</td><td class="num ctr-mid">0.88%</td></tr>
+          <tr><td><span class="tag tag--green">🌍 Africa</span></td><td class="num td-bold">735,219</td><td class="num">4,368</td><td class="num ctr-mid">0.59%</td></tr>
+          <tr class="row-total"><td>Grand Total</td><td class="num">1,504,196</td><td class="num">11,124</td><td class="num">0.74%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ CREATIVE PERFORMANCE ═══════════════════ -->
+<div id="creative" class="panel">
+
+  <div class="hero-strip">
+    <div class="hero-strip-inner">
+      <div class="hero-strip-eyebrow">Creative Analysis</div>
+      <div class="hero-strip-title">Ad Format &amp; Category Performance</div>
+      <div class="hero-strip-sub"></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div style="font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--alkimi-grey-mid);margin-bottom:var(--space-3)">Commentary</div>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-2)">
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>300×600 drove 7,012 clicks at <strong>1.72% CTR</strong> — 2.3× the campaign average and the standout format of the campaign.</span></li>
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>The Türkiye creative messaging theme leads all themes at <strong>1.11% CTR</strong>.</span></li>
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>Recommend increasing 300×600 and Türkiye creative allocation in the remaining June weeks.</span></li>
+    </ul>
+  </div>
+
+  <span class="overline">Format Summary</span>
+  <div class="kpi-grid">
+    <div class="kpi-card accent-purple">
+      <div class="kpi-label">Top CTR Format</div>
+      <div class="kpi-value">300×600</div>
+      <div class="kpi-sub">1.72% CTR · 7,012 clicks</div>
+    </div>
+    <div class="kpi-card accent-purple">
+      <div class="kpi-label">Highest Volume</div>
+      <div class="kpi-value">300×250</div>
+      <div class="kpi-sub">568,269 impressions</div>
+    </div>
+    <div class="kpi-card accent-green">
+      <div class="kpi-label">Top Creative Messaging</div>
+      <div class="kpi-value">Türkiye</div>
+      <div class="kpi-sub">1.11% CTR · 2,327 clicks</div>
+    </div>
+    <div class="kpi-card accent-grey">
+      <div class="kpi-label">Formats Active</div>
+      <div class="kpi-value">7</div>
+      <div class="kpi-sub">Ad sizes across campaign</div>
+    </div>
+  </div>
+
+  <span class="overline">CTR Analysis</span>
+  <div class="chart-grid col2">
+    <div class="chart-card">
+      <div class="chart-title">Creative Size — CTR</div>
+      <div class="chart-subtitle">Overall CTR per ad format</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="sizeCtxBar"></canvas></div>
+    </div>
+    <div class="chart-card">
+      <div class="chart-title">Creative Messaging — CTR</div>
+      <div class="chart-subtitle">Overall CTR per creative theme</div>
+      <div class="chart-wrap" style="height:260px"><canvas id="catCtrBar"></canvas></div>
+    </div>
+  </div>
+
+  <span class="overline">Creative Size Breakdown</span>
+  <div class="chart-card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Creative Size</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th></tr></thead>
+        <tbody>
+          <tr><td class="td-bold">160×600</td><td class="num">100,523</td><td class="num">33</td><td class="num">0.03%</td></tr>
+          <tr><td class="td-bold">300×250</td><td class="num">568,269</td><td class="num">2,739</td><td class="num ctr-mid">0.48%</td></tr>
+          <tr><td class="td-bold">300×50</td><td class="num">86,643</td><td class="num">440</td><td class="num ctr-mid">0.51%</td></tr>
+          <tr><td class="td-bold">300×600</td><td class="num">408,830</td><td class="num">7,012</td><td class="num ctr-high">1.72%</td></tr>
+          <tr><td class="td-bold">320×50</td><td class="num">252,378</td><td class="num">569</td><td class="num">0.23%</td></tr>
+          <tr><td class="td-bold">728×90</td><td class="num">32,496</td><td class="num">124</td><td class="num">0.38%</td></tr>
+          <tr><td class="td-bold">970×250</td><td class="num">55,057</td><td class="num">207</td><td class="num">0.38%</td></tr>
+          <tr class="row-total"><td>Total</td><td class="num">1,504,196</td><td class="num">11,124</td><td class="num">0.74%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <span class="overline">Creative Messaging Breakdown</span>
+  <div class="chart-card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Creative Messaging</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th></tr></thead>
+        <tbody>
+          <tr><td class="td-bold">Access</td><td class="num">324,921</td><td class="num">2,166</td><td class="num ctr-mid">0.67%</td></tr>
+          <tr><td class="td-bold">Africa1</td><td class="num">137,547</td><td class="num">841</td><td class="num ctr-mid">0.61%</td></tr>
+          <tr><td class="td-bold">Africa2</td><td class="num">158,728</td><td class="num">906</td><td class="num ctr-mid">0.57%</td></tr>
+          <tr><td class="td-bold">Border</td><td class="num">353,814</td><td class="num">2,296</td><td class="num ctr-mid">0.65%</td></tr>
+          <tr><td class="td-bold">Trust</td><td class="num">319,527</td><td class="num">2,588</td><td class="num ctr-mid">0.81%</td></tr>
+          <tr><td class="td-bold">Türkiye</td><td class="num">209,659</td><td class="num">2,327</td><td class="num ctr-high">1.11%</td></tr>
+          <tr class="row-total"><td>Total</td><td class="num">1,504,196</td><td class="num">11,124</td><td class="num">0.74%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- ═══════════════════ DOMAIN PERFORMANCE ═══════════════════ -->
+<div id="domain" class="panel">
+
+  <div class="hero-strip">
+    <div class="hero-strip-inner">
+      <div class="hero-strip-eyebrow">Placement Intelligence</div>
+      <div class="hero-strip-title">Domain &amp; App Performance</div>
+      <div class="hero-strip-sub"></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div style="font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--alkimi-grey-mid);margin-bottom:var(--space-3)">Commentary</div>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-2)">
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>Turkish news publishers deliver the highest CTR — cumhuriyet.com.tr at <strong>1.85%</strong> and businessinsider.com at <strong>1.96%</strong>.</span></li>
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>sozcu.com.tr leads on volume with 130,948 impressions.</span></li>
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>BBC.com provides premium brand-safe scale at 0.77% CTR.</span></li>
+    </ul>
+  </div>
+
+  <span class="overline">Domain Summary</span>
+  <div class="kpi-grid">
+    <div class="kpi-card accent-purple">
+      <div class="kpi-label">Domains Reached</div>
+      <div class="kpi-value">97</div>
+      <div class="kpi-sub">Unique placements</div>
+    </div>
+    <div class="kpi-card accent-green">
+      <div class="kpi-label">Peak CTR Domain</div>
+      <div class="kpi-value">1.96%</div>
+      <div class="kpi-sub">businessinsider.com</div>
+    </div>
+    <div class="kpi-card accent-purple">
+      <div class="kpi-label">Top Volume</div>
+      <div class="kpi-value">sozcu.com.tr</div>
+      <div class="kpi-sub">130,948 impressions</div>
+    </div>
+    <div class="kpi-card accent-grey">
+      <div class="kpi-label">Turkish Domains</div>
+      <div class="kpi-value">~51%</div>
+      <div class="kpi-sub">Share of total impressions</div>
+    </div>
+  </div>
+
+  <span class="overline">Top Domains by CTR</span>
+  <div class="chart-card">
+    <div class="chart-title">Top 10 Domains by CTR</div>
+    <div class="chart-subtitle">Minimum 1,000 impressions threshold</div>
+    <div class="chart-wrap" style="height:320px"><canvas id="domainCtrChart"></canvas></div>
+  </div>
+</div>
+
+<!-- ═══════════════════ RETARGETING PERFORMANCE ═══════════════════ -->
+<div id="retargeting" class="panel">
+
+  <div class="hero-strip">
+    <div class="hero-strip-inner">
+      <div class="hero-strip-eyebrow">Audience Retargeting · June 2026</div>
+      <div class="hero-strip-title">Retargeting Performance</div>
+      <div class="hero-strip-sub"></div>
+    </div>
+  </div>
+
+  <div class="insight">
+    <div style="font-family:var(--font-body);font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--alkimi-grey-mid);margin-bottom:var(--space-3)">Commentary</div>
+    <ul style="list-style:none;padding:0;margin:0;display:flex;flex-direction:column;gap:var(--space-2)">
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>Africa retargeting is delivering a <strong>1.24% CTR</strong> — significantly above the prospecting average (0.59%) — indicating strong audience quality from the May pool.</span></li>
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>Turkey retargeting pool is active but has not yet converted clicks.</span></li>
+      <li style="display:flex;gap:var(--space-2);align-items:flex-start"><span style="color:var(--alkimi-purple-light);flex-shrink:0">•</span><span>Recommend scaling Africa retargeting budget.</span></li>
+    </ul>
+  </div>
+
+  <span class="overline">Retargeting Summary</span>
+  <div class="kpi-grid-3">
+    <div class="kpi-card accent-purple">
+      <div class="kpi-label">Total Impressions</div>
+      <div class="kpi-value">1,117</div>
+      <div class="kpi-sub">Retargeting · June 2026</div>
+    </div>
+    <div class="kpi-card accent-green">
+      <div class="kpi-label">Total Clicks</div>
+      <div class="kpi-value">4</div>
+      <div class="kpi-sub">All from Africa segment</div>
+    </div>
+    <div class="kpi-card accent-grey">
+      <div class="kpi-label">Blended CTR</div>
+      <div class="kpi-value">0.36%</div>
+      <div class="kpi-sub">vs 0.74% prospecting average</div>
+    </div>
+  </div>
+
+  <span class="overline">Country Breakdown</span>
+  <div class="chart-card">
+    <div class="chart-title">Retargeting — Impressions by Country</div>
+    <div class="chart-subtitle">Turkey vs Africa split</div>
+    <div style="display:flex;align-items:center;gap:var(--space-8);flex-wrap:wrap">
+      <div class="chart-wrap" style="height:200px;width:200px;flex-shrink:0;display:flex;align-items:center;justify-content:center"><canvas id="retargDonut"></canvas></div>
+      <div style="flex:1;min-width:220px">
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:5px">
+          <span style="color:#FF6B83">🇹🇷 Turkey</span><span style="font-weight:600;color:var(--alkimi-white)">795 · 0 clicks · 0.00%</span>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" style="width:71.2%;background:linear-gradient(90deg,var(--alkimi-error),#FF6B83)"></div></div>
+        <div style="display:flex;justify-content:space-between;font-size:12px;margin-top:10px;margin-bottom:5px">
+          <span style="color:var(--alkimi-green)">🌍 Africa</span><span style="font-weight:600;color:var(--alkimi-white)">322 · 4 clicks · 1.24%</span>
+        </div>
+        <div class="prog-bar"><div class="prog-fill" style="width:28.8%;background:linear-gradient(90deg,var(--alkimi-green-dark),var(--alkimi-green))"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <span class="overline">Prospecting vs Retargeting — Full Context</span>
+  <div class="chart-card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Metric</th><th class="num">Prospecting (May)</th><th class="num">Prospecting (June)</th><th class="num">Retargeting (June)</th></tr></thead>
+        <tbody>
+          <tr><td>Turkey Impressions</td><td class="num">454,739</td><td class="num">314,238</td><td class="num td-bold" style="color:var(--alkimi-purple-light)">795</td></tr>
+          <tr><td>Africa Impressions</td><td class="num">449,404</td><td class="num">285,815</td><td class="num td-bold" style="color:var(--alkimi-purple-light)">322</td></tr>
+          <tr><td>Turkey CTR</td><td class="num ctr-high">1.15%</td><td class="num ctr-mid">0.49%</td><td class="num" style="color:var(--alkimi-grey-mid)">0.00%</td></tr>
+          <tr><td>Africa CTR</td><td class="num ctr-mid">0.71%</td><td class="num">0.42%</td><td class="num ctr-high">1.24%</td></tr>
+          <tr class="row-total"><td>Combined CTR</td><td class="num">0.93%</td><td class="num">0.46%</td><td class="num">0.36%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+</div><!-- /content -->
+
+<script>
+// ── TAB SWITCH ──
+function switchTab(id, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  el.classList.add('active');
+}
+
+// ── CHART DEFAULTS ──
+Chart.defaults.color = '#7A7A85';
+Chart.defaults.font.family = "'Poppins', system-ui, sans-serif";
+Chart.defaults.font.size = 11;
+
+const PURPLE     = '#5C26FF';
+const PURPLE_L   = '#8A5CFF';
+const GREEN      = '#00E87B';
+const GREEN_D    = '#00B862';
+const GREY_L     = '#C8C8D0';
+const GREY_M     = '#7A7A85';
+const RED        = '#FF4D6A';
+const RED_L      = '#FF6B83';
+const GRID       = 'rgba(255,255,255,0.06)';
+
+const ttOpts = {
+  backgroundColor: '#1A1A22',
+  borderColor: 'rgba(255,255,255,0.08)',
+  borderWidth: 1,
+  titleColor: '#FFFFFF',
+  bodyColor: '#C8C8D0',
+  padding: 10,
+  titleFont: { family: "'Poppins', sans-serif", weight: '600' },
+  bodyFont: { family: "'Poppins', sans-serif" }
+};
+
+function baseScales(extra = {}) {
+  return {
+    x: { grid: { color: GRID }, ticks: { maxRotation: 40 } },
+    y: { grid: { color: GRID } },
+    ...extra
+  };
+}
+
+// ── 1. DAILY CHART ──
+new Chart(document.getElementById('dailyChart'), {
+  type: 'line',
+  data: {
+    labels: ['26M','27M','28M','29M','30M','31M','1J','2J','3J','4J','5J','6J','7J'],
+    datasets: [
+      { label: 'Impressions', data: [24547,24913,62323,370057,303105,119198,54971,64892,189646,64309,136799,49466,39970],
+        borderColor: PURPLE, backgroundColor: 'rgba(92,38,255,0.1)', tension: 0.4, fill: true, yAxisID: 'y', pointRadius: 3, pointBackgroundColor: PURPLE },
+      { label: 'Clicks', data: [131,447,880,2245,3720,970,1074,1100,436,27,27,25,42],
+        borderColor: GREEN, backgroundColor: 'rgba(0,232,123,0.06)', tension: 0.4, fill: false, yAxisID: 'y1', pointRadius: 3, pointBackgroundColor: GREEN }
+    ]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: true, labels: { color: GREY_L, boxWidth: 10, font: { size: 11, family: "'Poppins', sans-serif" } } }, tooltip: ttOpts },
+    scales: {
+      x: { grid: { color: GRID } },
+      y: { grid: { color: GRID }, position: 'left', title: { display: true, text: 'Impressions', color: GREY_M } },
+      y1: { grid: { display: false }, position: 'right', title: { display: true, text: 'Clicks', color: GREY_M } }
+    }
+  }
+});
+
+// ── 5. SIZE CTR BAR ──
+const sizeLabels = ['160×600','300×250','300×50','300×600','320×50','728×90','970×250'];
+new Chart(document.getElementById('sizeCtxBar'), {
+  type: 'bar',
+  data: {
+    labels: sizeLabels,
+    datasets: [{ label: 'CTR %', data: [0.03,0.48,0.51,1.72,0.23,0.38,0.38],
+      backgroundColor: [PURPLE_L,PURPLE,PURPLE,'rgba(0,232,123,0.85)',PURPLE_L,PURPLE_L,PURPLE_L], borderRadius: 4 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...ttOpts, callbacks: { label: ctx => 'CTR: '+ctx.parsed.y.toFixed(2)+'%' } } },
+    scales: baseScales()
+  }
+});
+
+// ── 6. CREATIVE MESSAGING CTR BAR ──
+const catLabels = ['Access','Africa1','Africa2','Border','Trust','Türkiye'];
+new Chart(document.getElementById('catCtrBar'), {
+  type: 'bar',
+  data: {
+    labels: catLabels,
+    datasets: [{ label: 'CTR %', data: [0.67,0.61,0.57,0.65,0.81,1.11],
+      backgroundColor: [PURPLE,PURPLE,PURPLE,PURPLE,PURPLE_L,'rgba(0,232,123,0.85)'], borderRadius: 4 }]
+  },
+  options: {
+    responsive: true, maintainAspectRatio: false,
+    plugins: { legend: { display: false }, tooltip: { ...ttOpts, callbacks: { label: ctx => 'CTR: '+ctx.parsed.y.toFixed(2)+'%' } } },
+    scales: baseScales()
+  }
+});
+
+// ── DOMAIN DATA ──
+const domains = [
+  {name:'bbc.com',imps:124980,clicks:967,ctr:0.7737},
+  {name:'sozcu.com.tr',imps:130948,clicks:2180,ctr:1.6648},
+  {name:'cumhuriyet.com.tr',imps:113051,clicks:2095,ctr:1.8531},
+  {name:'businessinsider.com',imps:84268,clicks:1651,ctr:1.9592},
+  {name:'hurriyet.com.tr',imps:91615,clicks:333,ctr:0.3635},
+  {name:'mynet.com',imps:65237,clicks:264,ctr:0.4047},
+  {name:'yahoo.com',imps:57541,clicks:132,ctr:0.2294},
+  {name:'milliyet.com.tr',imps:54877,clicks:362,ctr:0.6597},
+  {name:'Netwerk24 (iOS)',imps:53363,clicks:107,ctr:0.2005},
+  {name:'mail.yahoo.com',imps:92958,clicks:10,ctr:0.0108},
+  {name:'cnbce.com',imps:60824,clicks:209,ctr:0.3436},
+  {name:'t24.com.tr',imps:43161,clicks:108,ctr:0.2502},
+  {name:'haberturk.com',imps:45098,clicks:175,ctr:0.3880},
+  {name:'sabah.com.tr',imps:32956,clicks:130,ctr:0.3945},
+  {name:'Investing.com (iOS)',imps:34882,clicks:380,ctr:1.0894},
+  {name:'Stocks / Investing (Android)',imps:28492,clicks:491,ctr:1.7233},
+  {name:'cnnturk.com',imps:27773,clicks:435,ctr:1.5663},
+  {name:'iol.co.za',imps:26589,clicks:110,ctr:0.4137},
+  {name:'finance.yahoo.com',imps:26722,clicks:131,ctr:0.4902},
+  {name:'investopedia.com',imps:22146,clicks:51,ctr:0.2303},
+  {name:'news24.com',imps:21394,clicks:13,ctr:0.0608},
+  {name:'Netwerk24 (Android)',imps:32995,clicks:29,ctr:0.0879},
+  {name:'investing.com',imps:18115,clicks:54,ctr:0.2981},
+  {name:'Sozcu (Android)',imps:16711,clicks:115,ctr:0.6882},
+  {name:'coingecko.com',imps:8231,clicks:6,ctr:0.0729},
+  {name:'bloomberght.com',imps:1873,clicks:18,ctr:0.9610},
+  {name:'timeslive.co.za',imps:2208,clicks:39,ctr:1.7663},
+  {name:'dunya.com',imps:5227,clicks:98,ctr:1.8749},
+  {name:'haber7.com',imps:3954,clicks:38,ctr:0.9611},
+  {name:'theblock.co',imps:30,clicks:1,ctr:3.333},
+  {name:'Hurriyet (iOS)',imps:2043,clicks:20,ctr:0.9790},
+  {name:'oilprice.com',imps:6563,clicks:31,ctr:0.4723},
+  {name:'Sozcu Gazetesi (iOS)',imps:10800,clicks:64,ctr:0.5926},
+  {name:'ntv.com.tr',imps:24201,clicks:31,ctr:0.1281},
+  {name:'posta.com.tr',imps:10069,clicks:38,ctr:0.3774},
+  {name:'sports.yahoo.com',imps:10470,clicks:22,ctr:0.2101},
+  {name:'enca.com',imps:30517,clicks:16,ctr:0.0524},
+  {name:'ewn.co.za',imps:2946,clicks:15,ctr:0.5092},
+  {name:'thesouthafrican.com',imps:2182,clicks:6,ctr:0.2750},
+  {name:'fortune.com',imps:2438,clicks:6,ctr:0.2461},
+  {name:'mybroadband.co.za',imps:1483,clicks:3,ctr:0.2023},
+  {name:'businesstech.co.za',imps:2835,clicks:10,ctr:0.3527},
+  {name:'sharenet.co.za',imps:3856,clicks:3,ctr:0.0778},
+  {name:'moneyweb.co.za',imps:7632,clicks:10,ctr:0.1310},
+  {name:'altin.in',imps:4986,clicks:12,ctr:0.2407},
+  {name:'hisse.net',imps:2065,clicks:11,ctr:0.5327},
+  {name:'fr.yahoo.com',imps:4632,clicks:10,ctr:0.2159},
+  {name:'netwerk24.com',imps:4883,clicks:12,ctr:0.2458},
+  {name:'topauto.co.za',imps:1312,clicks:6,ctr:0.4573},
+  {name:'News24 (iOS)',imps:10875,clicks:23,ctr:0.2115}
+];
+
+// Populate table if present
+const byImps = [...domains].sort((a,b)=>b.imps-a.imps);
+const tbody = document.getElementById('domainBody');
+if (tbody) {
+  byImps.forEach((d,i)=>{
+    const tr = document.createElement('tr');
+    const ctrColor = d.ctr>1.5 ? GREEN : d.ctr>0.7 ? PURPLE_L : GREY_L;
+    const bold = d.ctr>1.5 ? 'font-weight:600' : '';
+    tr.innerHTML = `<td style="color:${GREY_M}">${i+1}</td><td style="color:${GREY_L};font-weight:500">${d.name}</td><td class="num" style="color:${GREY_L}">${d.imps.toLocaleString()}</td><td class="num" style="color:${GREY_L}">${d.clicks.toLocaleString()}</td><td class="num" style="color:${ctrColor};${bold}">${d.ctr.toFixed(2)}%</td>`;
+    tbody.appendChild(tr);
+  });
+}
+
+// Top 10 by CTR (min 1000 imps)
+const byCtr = [...domains].filter(d=>d.imps>=1000).sort((a,b)=>b.ctr-a.ctr).slice(0,10);
+new Chart(document.getElementById('domainCtrChart'), {
+  type: 'bar',
+  data: {
+    labels: byCtr.map(d=>d.name.length>20?d.name.slice(0,20)+'…':d.name),
+    datasets: [{ data: byCtr.map(d=>d.ctr),
+      backgroundColor: byCtr.map(d=>d.ctr>1.5?GREEN:d.ctr>0.7?PURPLE_L:PURPLE),
+      borderRadius: 3 }]
+  },
+  options: {
+    indexAxis:'y', responsive:true, maintainAspectRatio:false,
+    plugins: { legend:{display:false}, tooltip:{...ttOpts, callbacks:{label:ctx=>ctx.parsed.x.toFixed(2)+'% CTR'}} },
+    scales: { x:{grid:{color:GRID},ticks:{callback:v=>v+'%'}}, y:{grid:{color:GRID}} }
+  }
+});
+
+
+// ── RETARGETING DONUT ──
+new Chart(document.getElementById('retargDonut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Turkey','Africa'],
+    datasets: [{ data: [795,322], backgroundColor: [RED, GREEN], borderWidth: 0, hoverOffset: 6 }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false, cutout:'68%',
+    plugins: { legend:{display:false}, tooltip:{...ttOpts} }
+  }
+});
+
+</script>
+</body>
+</html>
