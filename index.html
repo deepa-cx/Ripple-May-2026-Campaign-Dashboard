@@ -477,6 +477,7 @@
   <div class="tab" onclick="switchTab('creative',this)">Creative Performance</div>
   <div class="tab" onclick="switchTab('domain',this)">Domain Performance</div>
   <div class="tab" onclick="switchTab('retargeting',this)">Retargeting Performance</div>
+  <div class="tab" onclick="switchTab('devices',this)">Device Performance</div>
 </div>
 
 <!-- CONTENT -->
@@ -816,6 +817,96 @@
   </div>
 </div>
 
+<div id="devices" class="panel">
+  <div class="hero-strip">
+    <div class="hero-strip-eyebrow">Device Type Analysis</div>
+    <div class="hero-strip-title">Smartphone Dominance Across Both Markets</div>
+    <div class="hero-strip-sub">Smartphones drive 87.3% of impressions and 95.5% of all clicks — with desktop and tablet playing supporting roles.</div>
+  </div>
+
+  <div class="kpi-row">
+    <div class="kpi-card">
+      <div class="kpi-label">Smartphone Share</div>
+      <div class="kpi-value">87.3%</div>
+      <div class="kpi-sub">2,609,941 impressions · 1.25% CTR</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Desktop Share</div>
+      <div class="kpi-value">10.7%</div>
+      <div class="kpi-sub">319,738 impressions · 0.34% CTR</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Tablet Share</div>
+      <div class="kpi-value">1.9%</div>
+      <div class="kpi-sub">58,169 impressions · 0.75% CTR</div>
+    </div>
+    <div class="kpi-card">
+      <div class="kpi-label">Mobile CTR Premium</div>
+      <div class="kpi-value">3.7×</div>
+      <div class="kpi-sub">Smartphone vs desktop CTR</div>
+    </div>
+  </div>
+
+  <span class="overline">Impression &amp; CTR Split by Device</span>
+  <div class="chart-card" style="display:grid;grid-template-columns:1fr 1fr;gap:var(--space-6)">
+    <div>
+      <div class="chart-title">Impression Share by Device</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="deviceDonut"></canvas></div>
+    </div>
+    <div>
+      <div class="chart-title">CTR by Device Type</div>
+      <div class="chart-wrap" style="height:220px"><canvas id="deviceCtrBar"></canvas></div>
+    </div>
+  </div>
+
+  <span class="overline">Country × Device Breakdown</span>
+  <div class="chart-card">
+    <div class="chart-title">Impressions by Device — Turkey vs Africa</div>
+    <div class="chart-wrap" style="height:220px"><canvas id="deviceCountryBar"></canvas></div>
+  </div>
+
+  <span class="overline">Full Device Breakdown</span>
+  <div class="chart-card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Market</th><th>Device</th><th class="num">Impressions</th><th class="num">Clicks</th><th class="num">CTR</th><th class="num">Imps %</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="3"><span class="tag tag--red">🇹🇷 Turkey</span></td><td>📱 Smartphone</td><td class="num td-bold">1,309,449</td><td class="num">20,849</td><td class="num ctr-high">1.59%</td><td class="num">43.8%</td></tr>
+          <tr><td>🖥️ Desktop</td><td class="num">145,948</td><td class="num">196</td><td class="num">0.13%</td><td class="num">4.9%</td></tr>
+          <tr><td>📲 Tablet</td><td class="num">22,110</td><td class="num">295</td><td class="num ctr-mid">1.33%</td><td class="num">0.7%</td></tr>
+          <tr><td rowspan="3"><span class="tag tag--green">🌍 Africa</span></td><td>📱 Smartphone</td><td class="num td-bold">1,300,492</td><td class="num">11,773</td><td class="num ctr-mid">0.91%</td><td class="num">43.5%</td></tr>
+          <tr><td>🖥️ Desktop</td><td class="num">173,790</td><td class="num">899</td><td class="num ctr-mid">0.52%</td><td class="num">5.8%</td></tr>
+          <tr><td>📲 Tablet</td><td class="num">36,059</td><td class="num">139</td><td class="num ctr-mid">0.39%</td><td class="num">1.2%</td></tr>
+          <tr class="row-total"><td colspan="2">Total</td><td class="num">2,987,848</td><td class="num">34,151</td><td class="num">1.14%</td><td class="num">100%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <span class="overline">Monthly Device Trends</span>
+  <div class="chart-card">
+    <div class="chart-title">Smartphone CTR by Month &amp; Market</div>
+    <div class="chart-wrap" style="height:220px"><canvas id="deviceMonthBar"></canvas></div>
+  </div>
+
+  <div class="chart-card">
+    <div class="table-wrap">
+      <table>
+        <thead><tr><th>Month</th><th>Market</th><th class="num">Smartphone Imps</th><th class="num">Smartphone CTR</th><th class="num">Desktop CTR</th><th class="num">Tablet CTR</th></tr></thead>
+        <tbody>
+          <tr><td rowspan="2" style="font-weight:600;color:var(--alkimi-purple-light)">May</td><td><span class="tag tag--red">🇹🇷 Turkey</span></td><td class="num td-bold">429,957</td><td class="num ctr-high">1.18%</td><td class="num">0.34%</td><td class="num ctr-high">1.84%</td></tr>
+          <tr><td><span class="tag tag--green">🌍 Africa</span></td><td class="num td-bold">405,361</td><td class="num ctr-mid">0.75%</td><td class="num">0.31%</td><td class="num ctr-mid">0.58%</td></tr>
+          <tr><td rowspan="2" style="font-weight:600;color:var(--alkimi-green)">June</td><td><span class="tag tag--red">🇹🇷 Turkey</span></td><td class="num td-bold">836,609</td><td class="num ctr-high">1.72%</td><td class="num">0.10%</td><td class="num ctr-high">1.10%</td></tr>
+          <tr><td><span class="tag tag--green">🌍 Africa</span></td><td class="num td-bold">835,003</td><td class="num ctr-mid">0.94%</td><td class="num ctr-mid">0.51%</td><td class="num">0.35%</td></tr>
+          <tr><td rowspan="2" style="font-weight:600;color:#4A9FFF">July</td><td><span class="tag tag--red">🇹🇷 Turkey</span></td><td class="num td-bold">42,883</td><td class="num ctr-high">3.25%</td><td class="num ctr-high">1.74%</td><td class="num ctr-high">4.26%</td></tr>
+          <tr><td><span class="tag tag--green">🌍 Africa</span></td><td class="num td-bold">60,128</td><td class="num ctr-high">1.53%</td><td class="num ctr-high">4.33%</td><td class="num">0.42%</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div><!-- /devices panel -->
+
+
 </div><!-- /content -->
 
 <script>
@@ -1065,6 +1156,86 @@ new Chart(document.getElementById('retargDonut'), {
   options: {
     responsive:true, maintainAspectRatio:false, cutout:'68%',
     plugins: { legend:{display:false}, tooltip:{...ttOpts} }
+  }
+});
+
+// ── DEVICE CHARTS ──
+const BLUE = '#4A9FFF';
+const BLUE_D = '#2B7FDF';
+const PURPLE_L = '#7C52FF';
+
+new Chart(document.getElementById('deviceDonut'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Smartphone','Desktop','Tablet'],
+    datasets: [{ data: [2609941,319738,58169], backgroundColor: [PURPLE,BLUE,'#FF9F40'], borderWidth: 0, hoverOffset: 6 }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false, cutout:'68%',
+    plugins: {
+      legend: { display:true, position:'right', labels:{ color:'#A0A0B8', font:{size:11,family:'Poppins'}, boxWidth:12, padding:10 } },
+      tooltip: {...ttOpts}
+    }
+  }
+});
+
+new Chart(document.getElementById('deviceCtrBar'), {
+  type: 'bar',
+  data: {
+    labels: ['Smartphone','Tablet','Desktop'],
+    datasets: [{
+      data: [1.25, 0.75, 0.34],
+      backgroundColor: [PURPLE_L, '#FF9F40', BLUE],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false, indexAxis:'y',
+    plugins: { legend:{display:false}, tooltip:{...ttOpts} },
+    scales: {
+      x: { grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#A0A0B8',font:{size:11},callback:v=>v+'%'} },
+      y: { grid:{display:false}, ticks:{color:'#A0A0B8',font:{size:11}} }
+    }
+  }
+});
+
+new Chart(document.getElementById('deviceCountryBar'), {
+  type: 'bar',
+  data: {
+    labels: ['Smartphone','Desktop','Tablet'],
+    datasets: [
+      { label:'Turkey', data:[1309449,145948,22110], backgroundColor:RED, borderRadius:3 },
+      { label:'Africa', data:[1300492,173790,36059], backgroundColor:GREEN, borderRadius:3 }
+    ]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins: { legend:{labels:{color:'#A0A0B8',font:{size:11,family:'Poppins'},boxWidth:12}}, tooltip:{...ttOpts} },
+    scales: {
+      x: { grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#A0A0B8',font:{size:11}} },
+      y: { grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#A0A0B8',font:{size:11},callback:v=>v>=1e6?(v/1e6).toFixed(1)+'M':v>=1e3?(v/1e3).toFixed(0)+'K':v} }
+    }
+  }
+});
+
+new Chart(document.getElementById('deviceMonthBar'), {
+  type: 'bar',
+  data: {
+    labels: ['May – TR','May – AF','Jun – TR','Jun – AF','Jul – TR','Jul – AF'],
+    datasets: [{
+      label: 'Smartphone CTR',
+      data: [1.18, 0.75, 1.72, 0.94, 3.25, 1.53],
+      backgroundColor: [PURPLE,PURPLE,GREEN_D,GREEN_D,BLUE_D,BLUE],
+      borderRadius: 4
+    }]
+  },
+  options: {
+    responsive:true, maintainAspectRatio:false,
+    plugins: { legend:{display:false}, tooltip:{...ttOpts} },
+    scales: {
+      x: { grid:{display:false}, ticks:{color:'#A0A0B8',font:{size:11}} },
+      y: { grid:{color:'rgba(255,255,255,0.04)'}, ticks:{color:'#A0A0B8',font:{size:11},callback:v=>v+'%'} }
+    }
   }
 });
 
